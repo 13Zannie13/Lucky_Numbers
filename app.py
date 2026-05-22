@@ -45,9 +45,20 @@ if st.button("Generate Lucky Numbers"):
             nums = sorted(random.sample(REAL_TOTO_HOT, 3) + random.sample(REAL_TOTO_COLD, 3))
         st.success(f"Your lucky TOTO numbers are: {' - '.join(map(str, nums))}")
 
-# --- Footer/Donation ---
+# --- Footer/Donation (Final Robust Version) ---
 st.markdown("---")
 st.subheader("PLEASE SUPPORT THE DEVELOPER")
-qr = qrcode.make("00020101021126380009SG.PAYNOW010100211+6586789809030115204000053037025802SG5902NA6009Singapore6304ED38")
-st.image(qr, caption="Scan to Donate")
+
+# Generate QR
+qr_obj = qrcode.make("00020101021126380009SG.PAYNOW010100211+6586789809030115204000053037025802SG5902NA6009Singapore6304ED38")
+
+# Create a BytesIO buffer
+buf = io.BytesIO()
+qr_obj.save(buf, format='PNG')
+
+# Use seek(0) to ensure the pointer is at the start of the file
+buf.seek(0)
+
+# Display using the buffer
+st.image(buf, caption="Scan to Donate")
 st.write("**Alternatively, donate to PayNow: +65 8678 9809**")
